@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nova dostava</title>
+</head>
+<body>
+
+<h1>Nova dostava</h1>
+
+<h3 th:text="${restaurant.name}"></h3>
+
+<form th:action="@{/restaurants/action/{id}(id=${restaurant.id})}"
+      method="post">
+
+    <label>Ime kupca:</label>
+    <input type="text" name="customer" required>
+
+    <br><br>
+
+    <label>Adresa:</label>
+    <input type="text" name="address" required>
+
+    <br><br>
+
+    <button type="submit">Dodaj dostavu</button>
+</form>
+
+<br>
+
+<a href="/restaurants">Nazad na restorane</a>
+
+</body>
+</html>
