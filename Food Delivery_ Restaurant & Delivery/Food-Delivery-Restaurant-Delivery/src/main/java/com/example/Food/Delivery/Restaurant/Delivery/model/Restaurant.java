@@ -1,15 +1,15 @@
 package com.example.Food.Delivery.Restaurant.Delivery.model;
 
 import java.util.ArrayList;
-import  java.util.List;
+import java.util.List;
 
 public class Restaurant {
 
-    private Long id;
-    private String name;
-    private String address;
-    private String phone;
-    private List<Delivery> deliveries  = new ArrayList<>();
+    private final Long id;
+    private final String name;
+    private final String address;
+    private final String phone;
+    private final List<Meal> meals = new ArrayList<>();
 
     public Restaurant(Long id, String name, String address, String phone) {
         this.id = id;
@@ -18,22 +18,30 @@ public class Restaurant {
         this.phone = phone;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
     public String getAddress() {
         return address;
     }
-    public String getPhone(){
+
+    public String getPhone() {
         return phone;
     }
 
-    public List<Delivery>getDeliveries(){
-        return deliveries;
+    public List<Meal> getMeals() {
+        return new ArrayList<>(meals);
+    }
+
+    public void addMeal(Meal meal) {
+        if (meal.getRestaurant() != this) {
+            throw new IllegalArgumentException("Jelo ne pripada ovom restoranu.");
+        }
+        meals.add(meal);
     }
 }

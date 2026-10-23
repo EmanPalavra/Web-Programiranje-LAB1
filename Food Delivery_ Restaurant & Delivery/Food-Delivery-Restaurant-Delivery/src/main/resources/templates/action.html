@@ -1,33 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="bs" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Nova dostava</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Narudzba | Food Delivery</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
 </head>
 <body>
+<header>
+    <strong>Food Delivery</strong>
+    <nav>
+        <a th:href="@{/restaurants}">Restorani</a>
+        <a th:href="@{/meals}">Jela</a>
+    </nav>
+</header>
+<main>
+    <h1 th:text="${ordered == true ? 'Narudzba potvrdjena' : 'Naruci jelo'}"></h1>
+    <p class="success" role="status" th:if="${ordered == true}">Vasa narudzba je uspjesno primljena.</p>
+    <h2 th:text="${restaurant.name}"></h2>
+    <h3 th:text="${meal.name}"></h3>
+    <p th:text="${meal.description}"></p>
+    <p th:text="|Cijena: ${#numbers.formatDecimal(meal.price, 1, 2)} KM|"></p>
 
-<h1>Nova dostava</h1>
+    <div th:if="${ordered == true}">
+        <p th:text="|Kolicina: ${quantity}|"></p>
+        <p><strong th:text="|Ukupno: ${#numbers.formatDecimal(total, 1, 2)} KM|"></strong></p>
+    </div>
 
-<h3 th:text="${restaurant.name}"></h3>
-
-<form th:action="@{/restaurants/action/{id}(id=${restaurant.id})}"
-      method="post">
-
-    <label>Ime kupca:</label>
-    <input type="text" name="customer" required>
-
-    <br><br>
-
-    <label>Adresa:</label>
-    <input type="text" name="address" required>
-
-    <br><br>
-
-    <button type="submit">Dodaj dostavu</button>
-</form>
-
-<br>
-
-<a href="/restaurants">Nazad na restorane</a>
-
+    <p class="error" role="alert" th:if="${error}" th:text="${error}"></p>
+    <form th:unless="${ordered == true}"
+          th:action="@{/restaurants/action/{id}(id=${restaurant.id})}" method="post">
+        <input type="hidden" name="mealId" th:value="${meal.id}">
+        <label for="quantity">Kolicina</label>
+        <input id="quantity" name="quantity" type="number" min="1" max="20" value="1" required>
+        <div class="actions">
+            <button type="submit">Potvrdi narudzbu</button>
+        </div>
+    </form>
+    <div class="actions">
+        <a th:href="@{/meals(restaurantId=${restaurant.id})}">Nazad na meni</a>
+        <a th:href="@{/restaurants}">Izaberi drugi restoran</a>
+    </div>
+</main>
 </body>
 </html>
+

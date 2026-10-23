@@ -1,50 +1,55 @@
-Food Delivery
+# Food Delivery: Restaurant & Meal
 
-Lab vježba 1 – Web programiranje
+ Lab vjezba 1, Web programiranje.
 
-Student: Eman Palavra 518
-Student: Emin Nušinović 489
+## Clanovi
+- Eman Palavra, 518
+- Emin Nusinovic, 489
 
-Opis aplikacije
+## Modeli i relacija
+Restaurant: id, name, address, phone, meals.
+Meal: id, name, description, price, restaurant.
+Lista restorana prikazuje njegova jela. 
 
-Food Delivery je jednostavna Spring Boot MVC aplikacija za pregled restorana i njihovih dostava. Korisnik može dodati novu dostavu odabranom restoranu.
+Lista jela prikazuje restoran kojem jelo pripada.
 
-Modeli
+## Pokretanje
+Potreban je JDK 25 ili noviji. Prvo pokretanje zahtijeva internet za Maven zavisnosti.
+Otvoriti u IntelliJ IDEA folder koji sadrzi pom.xml:
 
-Restaurant – id, name, address, phone, deliveries
+`Food Delivery_ Restaurant & Delivery/Food-Delivery-Restaurant-Delivery`.
 
-Delivery – id, customer, address, status, restaurant
+Adresa: http://localhost:8080
 
-Relacija je 1. Jedan restoran može imati više dostava, a svaka dostava pripada jednom restoranu.
+## Rute i akcija
+- GET /: preusmjeravanje na restorane.
+- GET /restaurants (ili /a): lista restorana i njihovih jela.
+- GET /meals (ili /b): lista jela i pripadajucih restorana.
+- GET /meals?restaurantId={id}: meni odabranog restorana.
+- GET /restaurants/action/{id}?mealId={mealId} (ili /a/action/{id}): pregled jela i potvrda narucivanja.
+- POST na istu adresu: provjera jela i kolicine, obracun ukupne cijene i preusmjeravanje na potvrdu.
 
-Logički tok izrade
+Akcija: izabrati restoran preko Pogledaj meni, odabrati Naruci pored jela,
+unijeti kolicinu 1-20 i kliknuti Potvrdi narudzbu.
+Potvrda prikazuje restoran, jelo, kolicinu i ukupnu cijenu.
+Neispravna kolicina prikazuje poruku. Nepostojeci restoran ili jelo vraca HTTP 404.
+Jelo drugog restorana nije moguce naruciti kroz pogresan restoran.
+Ovo je demonstracija narucivanja: nema placanja, stvarne dostave ni trajne historije narudzbi.
+Potvrda je privremena poruka nakon POST zahtjeva; osvjezavanje je ne salje ponovo.
+Podaci su u DemoData.java, bez baze, i resetuju se restartom aplikacije.
 
-Kreiran je Spring Boot projekat.
+## Podjela rada
+Plan odgovornosti koji clanovi trebaju potvrditi stvarnim doprinosima:
+- Eman: Restaurant, ruta i lista restorana.
+- Emin: Meal, ruta i lista jela.
+- Zajednicki: DemoData, akcija, testiranje i dokumentacija.
 
-Dodane su Spring MVC i Thymeleaf zavisnosti.
+Automatska dorada ne predstavlja dokaz odvojenih studentskih doprinosa.
 
-Napravljene su klase Restaurant i Delivery.
+## Screenshot
+![Lista restorana](docs/restaurants.png)
 
-U DemoData klasi uneseni su početni podaci bez baze podataka.
+![Potvrda narudzbe](docs/order.png)
 
-Kreiran je AppController sa GET i POST rutama.
 
-Napravljene su tri Thymeleaf HTML stranice.
 
-Dodana je forma za unos nove dostave.
-
-Podjela rada
-
-Eman: Restaurant model, ruta i prikaz restorana.
-
-Emin: Delivery model, ruta i prikaz dostava.
-
-Zajednički: DemoData, akcija dodavanja dostave i action.html.
-
-Korišteni izvori
-
-Spring Boot: https://spring.io/projects/spring-boot
-
-Thymeleaf: https://www.thymeleaf.org/documentation.html
-
-Spring MVC: https://docs.spring.io/spring-framework/reference/web/webmvc.html

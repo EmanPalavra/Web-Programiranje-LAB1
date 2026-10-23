@@ -14,6 +14,8 @@
 
 	<groupId>com.example</groupId>
 	<artifactId>Food-Delivery-Restaurant-Delivery</artifactId>
+	<name>Food Delivery: Restaurant &amp; Meal</name>
+	<description>Mini MVC aplikacija za restorane i jela</description>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<properties>

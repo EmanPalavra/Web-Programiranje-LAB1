@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="bs" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Food Delivery</title>
+        <link rel="stylesheet" th:href="@{/style.css}">
+    </head>
+    <body>
+        <header>
+            <strong>Food Delivery</strong>
+            <nav>
+                <a th:href="@{/restaurants}">Restorani</a>
+                <a th:href="@{/meals}">Jela</a>
+            </nav>
+        </header>
+        <main>
+            <h1>Jela</h1>
+            <h2 th:if="${restaurant}" th:text="${restaurant.name}"></h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Naziv</th>
+                            <th>Opis</th>
+                            <th>Cijena</th>
+                            <th>Restoran</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m : ${meals}">
+                            <td th:text="${m.id}"></td>
+                            <td th:text="${m.name}"></td>
+                            <td th:text="${m.description}"></td>
+                            <td th:text="|${#numbers.formatDecimal(m.price,1,2)} KM|"></td>
+                            <td th:text="${m.restaurant.name}"></td>
+                            <td>
+                                <a th:href="@{/restaurants/action/{id}(id=${m.restaurant.id},mealId=${m.id})}">Naruci</a>
+                            </td>
+                        </tr>
+                        <tr th:if="${meals.empty}">
+                            <td colspan="6">Nema jela.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

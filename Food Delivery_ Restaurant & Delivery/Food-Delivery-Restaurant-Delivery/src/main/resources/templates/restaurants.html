@@ -1,40 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Restorani</title>
-</head>
-<body>
-
-<h1>Food Delivery</h1>
-
-<a href="/restaurants">Restorani</a> |
-<a href="/deliveries">Dostave</a>
-
-<h2>Lista restorana</h2>
-
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Naziv</th>
-        <th>Adresa</th>
-        <th>Telefon</th>
-        <th>Broj dostava</th>
-        <th>Akcija</th>
-    </tr>
-
-    <tr th:each="r : ${restaurants}">
-        <td th:text="${r.id}"></td>
-        <td th:text="${r.name}"></td>
-        <td th:text="${r.address}"></td>
-        <td th:text="${r.phone}"></td>
-        <td th:text="${r.deliveries.size()}"></td>
-        <td>
-            <a th:href="@{/restaurants/action/{id}(id=${r.id})}">
-                Dodaj dostavu
-            </a>
-        </td>
-    </tr>
-</table>
-
-</body>
+<html lang="bs" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Food Delivery</title>
+        <link rel="stylesheet" th:href="@{/style.css}">
+    </head>
+    <body>
+        <header>
+            <strong>Food Delivery</strong>
+            <nav>
+                <a th:href="@{/restaurants}">Restorani</a>
+                <a th:href="@{/meals}">Jela</a>
+            </nav>
+        </header>
+        <main>
+            <h1>Restorani</h1>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Naziv</th>
+                            <th>Adresa</th>
+                            <th>Telefon</th>
+                            <th>Jela</th>
+                            <th>Akcija</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="r : ${restaurants}">
+                            <td th:text="${r.id}"></td>
+                            <td th:text="${r.name}"></td>
+                            <td th:text="${r.address}"></td>
+                            <td th:text="${r.phone}"></td>
+                            <td>
+                                <span th:if="${r.meals.empty}">Nema jela</span>
+                                <span class="meal" th:each="m : ${r.meals}" th:text="${m.name}"></span>
+                            </td>
+                            <td>
+                                <a th:href="@{/meals(restaurantId=${r.id})}">Pogledaj meni</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </body>
 </html>
