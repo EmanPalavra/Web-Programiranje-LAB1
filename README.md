@@ -44,8 +44,6 @@ Plan odgovornosti koji clanovi trebaju potvrditi stvarnim doprinosima:
 - Emin: Meal, ruta i lista jela.
 - Zajednicki: DemoData, akcija, testiranje i dokumentacija.
 
-Automatska dorada ne predstavlja dokaz odvojenih studentskih doprinosa.
-
 ## Screenshot
 ![Lista restorana](docs/restaurants.png)
 
