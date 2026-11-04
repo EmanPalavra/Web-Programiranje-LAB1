@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="bs" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Narudzbe | Food Delivery</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header><strong>Food Delivery</strong><nav>
+    <a th:href="@{/restaurants}">Restorani</a>
+    <a th:href="@{/meals}">Jela</a>
+    <a th:href="@{/orders}">Narudzbe</a>
+</nav></header>
+<main>
+    <h1>Narudzbe</h1>
+    <p><a th:href="@{/orders/add}">Nova narudzba</a> | <a th:href="@{/api/orders}">JSON prikaz</a></p>
+    <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Kupac</th><th>Adresa</th><th>Jelo</th><th>Restoran</th><th>Kolicina</th><th>Ukupno</th><th>Akcija</th></tr></thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customerName}"></td>
+            <td th:text="${order.deliveryAddress}"></td>
+            <td th:text="${order.meal.name}"></td>
+            <td th:text="${order.meal.restaurant.name}"></td>
+            <td th:text="${order.quantity}"></td>
+            <td th:text="|${#numbers.formatDecimal(order.total,1,2)} KM|"></td>
+            <td><a th:href="@{/orders/update/{id}(id=${order.id})}">Izmijeni</a></td>
+        </tr>
+        <tr th:if="${orders.empty}"><td colspan="8">Nema narudzbi.</td></tr>
+        </tbody>
+    </table></div>
+</main>
+</body>
+</html>
+

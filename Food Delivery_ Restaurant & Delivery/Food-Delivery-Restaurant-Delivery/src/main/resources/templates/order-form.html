@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="bs" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Narudzbe | Food Delivery</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<header><strong>Food Delivery</strong><nav>
+    <a th:href="@{/restaurants}">Restorani</a>
+    <a th:href="@{/meals}">Jela</a>
+    <a th:href="@{/orders}">Narudzbe</a>
+</nav></header>
+<main>
+    <h1 th:text="${orderId == null ? 'Nova narudzba' : 'Izmjena narudzbe'}"></h1>
+    <p th:if="${meals.empty}">Trenutno nema dostupnih jela.</p>
+    <form th:object="${orderForm}" th:action="${orderId == null} ? @{/orders/add} : @{/orders/update/{id}(id=${orderId})}" method="post">
+        <div class="error" role="alert" th:if="${#fields.hasErrors('*')}">
+            <p th:each="error : ${#fields.errors('*')}" th:text="${error}"></p>
+        </div>
+        <label for="customerName">Ime kupca</label>
+        <input id="customerName" th:field="*{customerName}" maxlength="100" required>
+        <label for="deliveryAddress">Adresa dostave</label>
+        <input id="deliveryAddress" th:field="*{deliveryAddress}" maxlength="255" required>
+        <label for="mealId">Jelo</label>
+        <select id="mealId" th:field="*{mealId}" required>
+            <option value="">Izaberite jelo</option>
+            <option th:each="meal : ${meals}" th:value="${meal.id}" th:text="|${meal.name} - ${meal.restaurant.name} (${meal.price} KM)|"></option>
+        </select>
+        <label for="quantity">Kolicina (1-20)</label>
+        <input id="quantity" th:field="*{quantity}" type="number" min="1" max="20" required>
+        <p>Ukupnu cijenu racuna server prema cijeni izabranog jela.</p>
+        <div class="actions"><button type="submit" th:disabled="${meals.empty}">Sacuvaj</button><a th:href="@{/orders}">Odustani</a></div>
+    </form>
+</main>
+</body>
+</html>
+
