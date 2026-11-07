@@ -4,7 +4,6 @@
 
 ## Clanovi
 - Eman Palavra, 518
-- Emin Nusinovic, 489
 
 ## Modeli i relacija
 Restaurant: id, name, address, phone, meals.
